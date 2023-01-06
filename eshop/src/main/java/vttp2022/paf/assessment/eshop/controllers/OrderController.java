@@ -2,6 +2,7 @@ package vttp2022.paf.assessment.eshop.controllers;
 
 import java.io.StringReader;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -97,11 +98,13 @@ public class OrderController {
     }
 
     public ResponseEntity<String> insertOrderStatus(@RequestBody String body) {
+
         JsonReader jsonReader = Json.createReader(new StringReader(body)); 
         JsonObject jsonObject = jsonReader.readObject(); 
         String orderId = jsonObject.getString("orderId"); 
         String deliveryId = jsonObject.getString("deliveryId"); 
         String status = jsonObject.getString("status");
+        LocalDateTime statusUpdate = LocalDateTime.now(); 
 
         
         return null; 

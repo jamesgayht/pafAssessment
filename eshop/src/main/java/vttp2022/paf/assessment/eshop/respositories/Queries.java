@@ -13,4 +13,7 @@ public class Queries {
     public static String SQL_FIND_LINEITEMS_WITH_ORDERID = "select lineitems.item, lineitems.quantity from orders join lineitems on orders.order_id = lineitems.order_id where orders.order_id = ?"; 
 
     public static String SQL_INSERT_INTO_ORDER_STATS = "insert into order_status (order_id, delivery_id, status, status_update) values (?, ?, ?, ?)";
+    
+    public static String SQL_GET_ORDER_STATUS_COUNTS = "select orders.name, order_status.status from orders join order_status on orders.order_id = order_status.order_id group by orders.name, order_status.status;";
+
 }

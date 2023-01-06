@@ -1,5 +1,7 @@
 package vttp2022.paf.assessment.eshop.models;
 
+import java.time.LocalDateTime;
+
 // DO NOT CHANGE THIS CLASS
 public class OrderStatus {
 
@@ -8,7 +10,14 @@ public class OrderStatus {
 	private String orderId;
 	private String deliveryId = "";
 	private Status status;
+	private LocalDateTime statusUpdate;
 
+	public LocalDateTime getStatusUpdate() {
+		return statusUpdate;
+	}
+	public void setStatusUpdate(LocalDateTime statusUpdate) {
+		this.statusUpdate = statusUpdate;
+	}
 	public String getOrderId() { return this.orderId; }
 	public void setOrderId(String orderId) { this.orderId = orderId; }
 
@@ -20,5 +29,5 @@ public class OrderStatus {
     public void setStatus(String status) {
         this.status = Status.valueOf(status);
     }
-	
+
 }
