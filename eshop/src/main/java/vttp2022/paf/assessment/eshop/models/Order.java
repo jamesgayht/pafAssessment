@@ -4,6 +4,13 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
+import jakarta.json.Json;
+import jakarta.json.JsonArrayBuilder;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonObjectBuilder;
+
 // DO NOT CHANGE THIS CLASS
 public class Order {
 
@@ -15,6 +22,55 @@ public class Order {
 	private String status;
 	private Date orderDate = new Date();
 	private List<LineItem> lineItems = new LinkedList<>();
+
+	public JsonObject toJson() {
+
+        final String CREATED_BY_NAME = "Gay Horng Tze James"; 
+		JsonObjectBuilder objectBuilder = Json.createObjectBuilder();
+        JsonArrayBuilder arrayBuilder = Json.createArrayBuilder();
+
+        for(LineItem li: lineItems) {
+            arrayBuilder.add(objectBuilder.add("item", li.getItem())
+                                            .add("quantity", li.getQuantity())
+											.build());
+        }
+
+        return Json.createObjectBuilder()
+                    .add("orderId", getOrderId())
+                    .add("name", getName())
+                    .add("address", getAddress())               
+                    .add("email", getEmail())
+					.add("lineItems", arrayBuilder)  
+					.add("createdBy", CREATED_BY_NAME)            
+                    .build();
+    }
+
+	public Order createOrder(SqlRowSet rs, List<LineItem> lineItems) {
+		Order order = new Order(); 
+		order.setOrderId(rs.getString("order_id"));
+		order.setName(rs.getString("name"));
+		order.setAddress(rs.getString("address"));
+		order.setEmail(rs.getString("email"));
+		order.setOrderDate(rs.getDate("order_date"));
+		order.setLineItems(lineItems);
+		return order;
+	}
+
+	public Order() {
+		
+	}
+
+	public Order(String orderId, String deliveryId, String name, String address, String email, String status,
+			Date orderDate, List<LineItem> lineItems) {
+		this.orderId = orderId;
+		this.deliveryId = deliveryId;
+		this.name = name;
+		this.address = address;
+		this.email = email;
+		this.status = status;
+		this.orderDate = orderDate;
+		this.lineItems = lineItems;
+	}
 
 	public String getOrderId() { return this.orderId; }
 	public void setOrderId(String orderId) { this.orderId = orderId; }

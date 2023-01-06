@@ -1,11 +1,25 @@
 package vttp2022.paf.assessment.eshop.models;
 
+import org.springframework.jdbc.support.rowset.SqlRowSet;
+
 // DO NOT CHANGE THIS CLASS
 public class Customer {
-
+	
 	private String name;
 	private String address;
 	private String email;
+
+	public static Customer createCustomer(SqlRowSet rs) {
+		Customer customer = new Customer(); 
+		customer.setName(rs.getString("name"));
+		customer.setAddress(rs.getString("address"));
+		customer.setEmail(rs.getString("email"));
+		return customer;
+	}
+
+	public String toString() {
+		return "NAME >>> %s, ADDRESS >>> %s, EMAIL >>> %s\n".formatted(name, address, email);
+	}
 
 	public String getName() { return this.name; }
 	public void setName(String name) { this.name = name; }
